@@ -121,7 +121,7 @@ The above code is thread-safe. However, it is not efficient. If two threads call
 
 ```java
 public class Database {
-    private static Database instance = null;
+    private volatile static Database instance = null;
 
     private Database() {
     }
@@ -138,6 +138,9 @@ public class Database {
     }
 }
 ```
+
+✅ Without volatile in double-checked locking singleton:
+❌ Another thread can get a partially constructed singleton object due to instruction reordering → unpredictable bugs.
 
 ```java
 
@@ -188,7 +191,7 @@ public class Database {
     }
 }
 ```
-bill pugh to pass dynamic values
+ abovebill pugh to pass dynamic values
 
 ### Summary
 * The singleton pattern is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.
@@ -201,7 +204,7 @@ bill pugh to pass dynamic values
   * Make the `getInstance()` method synchronized.
   * Use double-checked locking.
 
-
+----------------------------------------------------------------------------------------------
 ## Builder
 
 ### Problems
